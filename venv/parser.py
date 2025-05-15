@@ -9,7 +9,7 @@ from fake_headers import Headers
 # Определяем ключевые слова для поиска
 KEYWORDS = ['дизайн', 'фото', 'web', 'python']
 # Создание подменного юзер-агента
-headers = Headers(browser='chrome', os='win').generate()
+headers = Headers(browser='firefox', os='win').generate()
 # Жертва парсинга
 url = "https://habr.com/ru/articles/"
 # Отпрвка гет запроса
@@ -38,12 +38,22 @@ for article in articles:
     date = date_tag['title']
 #   print(date)
     # Работа с превью статьи для поиска ключевых слов
-    preview_tag = article.find('div', class_=f"article-formatted-body article-formatted-body article-formatted-body_version-2").text
+    preview_tag = article.find('div', class_="article-formatted-body article-formatted-body article-formatted-body_version-2")
     # print(preview_tag)
+    if preview_tag:
+        try:
+                preview_text = preview_tag.text.strip('')
+        except AttributeError:
+            preview_text = 'Text not found'
+    else:
+        preview_text = "Can't get the data"
     # Поиск по ключевым словам в превью 
-    if any(keyword.lower() in preview_tag.lower() for keyword in KEYWORDS):
-        print(f"{date} - {name} - {link}")
+    for keyword in KEYWORDS:
+        if keyword.lower() in preview_text.lower():
+            print(f"{date} - {name} - {link}")
+        else:
+            pass
         
 
 # Вывод нужных статей
-print(f"{date} – {name} – {link}")
+print(f"{date} - {name} - {link}")
