@@ -28,7 +28,7 @@ for article in articles:
         name = name_tag.text.strip('') 
     else: 
         name = 'Name not defined'
-    # print(name)
+#   print(name)
     # Поиск ссылки
     link_tag = name_tag.find('a')
     link = "https://habr.com" + link_tag["href"]
@@ -39,7 +39,8 @@ for article in articles:
 #   print(date)
     # Работа с превью статьи для поиска ключевых слов
     preview_tag = article.find('div', class_="article-formatted-body article-formatted-body article-formatted-body_version-2")
-    # print(preview_tag)
+#   print(preview_tag)
+    # Проверка, что элемент найден:
     if preview_tag:
         try:
                 preview_text = preview_tag.text.strip('')
